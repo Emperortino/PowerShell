@@ -1,3 +1,72 @@
+## get-tokenprivs.ps1
+
+* 前提，获取目标机器权限，可以执行命令，或者上传文件
+
+
+
+作用：打开进程的句柄，并调用Advapi32 :: GetTokenInformation列出与进程相关联的特权。
+
+
+
+#### 1. 下载
+
+下载地址：https://github.com/Emperortino/PowerShell/blob/master/常用脚本/Get-TokenPrivs.ps1
+
+
+
+#### 2. 导入
+
+```powershell
+PS C:\Users\Fun\Desktop> powershell -exec bypass		// 可以使用powershell执行任意脚本
+Windows PowerShell
+版权所有 (C) 2009 Microsoft Corporation。保留所有权利。
+
+PS C:\Users\Fun\Desktop> Import-Module .\Get-TokenPrivs.ps1		// 导入脚本
+```
+
+
+
+#### 3. 使用
+
+* 先获取进程ID
+
+```cmd
+PS C:\Users\Fun\Desktop> ps
+
+Handles  NPM(K)    PM(K)      WS(K) VM(M)   CPU(s)     Id ProcessName
+-------  ------    -----      ----- -----   ------     -- -----------
+     76      18     6024      12016    88     0.11   2532 calc
+     23       5     1856       2896    45     0.02   2136 cmd
+     63       7     1792       7764    66     1.26   1976 conhost
+    464      11     1816       4616    82             348 csrss
+    233      15     9936      18728   213             412 csrss
+    190      15     4196       8500    55            2036 dllhost
+    126      13    78084      71316   177    51.11   2328 dwm
+```
+
+
+
+然后查询相关的特权
+
+```cmd
+PS C:\Users\Fun\Desktop> Get-TokenPrivs -ProcID 2532
+
+[?] PID 2532 --> calc
+[+] Process handle: 1452
+[+] Token handle: 2272
+[+] Token has 5 privileges:
+
+LUID Privilege
+---- ---------
+  19 SeShutdownPrivilege
+  23 SeChangeNotifyPrivilege
+  25 SeUndockPrivilege
+  33 SeIncreaseWorkingSetPrivilege
+  34 SeTimeZonePrivilege
+```
+
+
+
 ## powerview.ps1
 
 * 用于域中信息收集
